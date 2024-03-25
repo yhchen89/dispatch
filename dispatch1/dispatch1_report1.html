@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script type="text/javascript" src="http://code.changer.hk/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <title>派修回報</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.datatables.net/fixedheader/3.1.3/css/fixedHeader.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/fixedheader/3.1.3/js/dataTables.fixedHeader.min.js"></script>
+    <script src="getWebSocket.js"></script>
+</head>
+
+<body>
+    <div class="kv" ">
+        <nav class=" navbar navbar-expand-lg navbar-dark bg-dark ">
+            <div class=" container-fluid">
+        <a class="navbar-brand">派勤系統</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="../account/account.html">帳號管理</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        客戶管理
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../customer/customer.html">客戶資料</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../customer/import_data.html">匯入資料</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        派勤
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../dispatch2/dispatch2.html">派勤回報</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/dispatch2_case_search.html">派勤資料查詢</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/switch_control.html">地區控制開關</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/switch_signal.html">訊號控制開關</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        派修
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1_report1.html">派修回報</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1_case_search.html">派修資料查詢</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1.html">派修單</a></li>
+
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        值勤
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../duty/duty.html">值勤表</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../duty/check_subscribe.html">追蹤區域</a></li>
+                    </ul>
+                    
+                </li>
+
+            </ul>
+            <label id="login_name"></label>
+                <script>
+                    document.write("@");
+                </script>
+            <form method="POST" action="../logout.php";>
+                <script>
+                    function FormSubmit1(){
+                        return confirm('確定登出?');
+                    }
+                </script>
+                <button type="submit" class="btn btn-light" id="submit" name="submit" onclick="return FormSubmit1()">登出</button>
+            </form>
+        </div>
+    </div>
+    </nav>
+
+    <div class="container-fluid  ">
+            <div class="row " >
+
+                <div class="col-12" style="height: 89vh;">
+
+                    <!--<div class="container align-items-end" style="height: 100%;">-->
+                        <div class="row mt-1">
+                            <figure class="text-center">
+                                <blockquote class="blockquote">
+                                    <h2>派修回報</h2>
+                                </blockquote>
+                            </figure>
+                        </div>
+                        
+                        <div class="row">
+
+
+                        <!-- Modal 內勤傳訊 -->
+                        <div class="modal fade" id="exampleModal_1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel_1">內勤發送訊息</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form method="POST" onsubmit="post_message()";>
+                                    <div class="modal-body">
+                                        <label for="area_ID_1" class="form-label" hidden>客戶代號</label><input type="text" class="form-control" name="area_ID_1" id="area_ID_1" value="" hidden >
+                                        <label for="message1" class="form-label">訊息內容</label><textarea class="form-control" name="message1" id="message1" rows="5"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                        <button type="submit" class="btn btn-primary" id="submit" name="submit">發送</button>
+                                    </div>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Modal 結案回報 -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">派修結案回報</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form method="POST" action="dispatch1_report2.php";>
+                                    <div class="modal-body">
+                                        <label for="dispatch1_ID_2" class="form-label" hidden>客戶代號</label><input type="text" class="form-control" name="dispatch1_ID_2" id="dispatch1_ID_2" value="" hidden >
+                                        <label for="note1" class="form-label">回報內容</label><textarea class="form-control" name="note1" id="note1" rows="5"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                        <button type="submit" class="btn btn-primary" id="submit" name="submit">新增</button>
+                                    </div>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                            <table id="datatable" class="table table-striped table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">  收到警報時間  </th>
+                                        <th scope="col" class="text-center">  通知保全時間  </th>
+                                        <th scope="col" class="text-center">  保全到達時間  </th>
+                                        <th scope="col" class="text-center">  結案時間  </th>
+                                        <th scope="col" class="text-center">客戶簡稱</th>
+                                        <th scope="col" class="text-center">巡邏區</th>
+                                        <th scope="col" class="text-center">案件描述</th>
+                                        <th scope="col" class="text-center">保全回報內容</th>
+                                        <th scope="col" class="text-center">狀態</th>
+                                        <th scope="col" class="text-center">結案</th>
+                                        <th scope="col" class="text-center">內勤傳訊</th>
+                                        <th scope="col" class="text-center">派修</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                                <script type="text/javascript">
+                                //var clock = setInterval(repaint , 10000);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '../get_login_name.php',
+                                    data: {
+                                        
+                                    },
+                                    success: function(data) {
+                                        const a = data.split(/[{":}@]/);
+                                        const b = a[5];
+                                        var trStr = '';
+                                        trStr += "<div style='color:white'>"+'歡迎登入，'+b+"</div>";
+                                        $("#login_name").html(trStr);
+                                    }
+                                });
+
+                                                          //檢查session
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '../check_session.php',
+                                    data: {
+                                        
+                                    },
+                                    success: function(data) {
+                                        if(data != 4){
+                                            alert('請重新登入');
+                                            window.location.href=('../login.html');
+                                        }
+                                    }
+                                });
+                                
+
+                                var mySocket;
+                                $(function(){
+                                    mySocket = new WebSocket(hohoway());    //getWebSocket.js
+                                    mySocket.onopen = function(event) {
+                                        //alert("connect");
+                                        mySocket.send("hello");
+                                    };
+                                    mySocket.onmessage = function(event) {
+                                        //alert('message');
+                                        //alert(event.data);
+                                        if(event.data){
+                                            repaint();
+                                        }
+                                    };
+                                    mySocket.onerror = function(event) {
+                                        //alert("error");
+                                    };
+                                    mySocket.onclose = function(event) {
+                                        //alert("close");
+                                    };
+                                })
+                                function repaint(){
+                                    if($('#datatable').DataTable().search()==''){
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: 'dispatch1_report1.php',
+                                            data: {
+                                                "current_state": 2
+                                            },
+                                            success: function(data) {
+                                                //alert(data)
+                                                var a = data.split('&');
+                                                a.splice(a.length-1, a.length);
+                                                var trStr = '';
+                                                
+                                                $.each(a, function (index, item) {
+                                                    trStr += '<tr>';
+                                                    trStr += '<td class="text-center">' + JSON.parse(item).time + '</td>';
+                                                    trStr += '<td class="text-center">' + JSON.parse(item).security_receive_time + '</td>';
+                                                    trStr += '<td class="text-center">' + JSON.parse(item).security_arrive_time + '</td>';
+                                                    trStr += '<td class="text-center">' + JSON.parse(item).caseclose_time + '</td>';
+                                                    
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-success mx-auto" value='+JSON.parse(item).customer_ID+' onclick="check_customer(this.value)"> '+ JSON.parse(item).customer_abbreviation +'</button>';
+                                                    trStr += '<td class="text-center">' + JSON.parse(item).patrol_area + '</td>';
+                                                    trStr += '<td class="text-center">' + JSON.parse(item).description + '</td>';
+                                                    trStr += '<td class="text-center">' + JSON.parse(item).dispatcher_report + '</td>';
+
+                                                    if(JSON.parse(item).current_state == '0'){
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" style="background-color:blue">已收到警報</button></td>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id='+JSON.parse(item).dispatch1_ID+' onclick="get_ID(this.id)"disabled>結案</button>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_1" id='+JSON.parse(item).area_ID+' onclick="get_area_ID(this.id)">發送</button>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-success" value="'+JSON.parse(item).dispatch1_ID+'"" onclick="send_message(this.value)">派修</button>';
+                                                    }
+                                                    else if(JSON.parse(item).current_state == '1'){
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" style="background-color:green">保全已收到</button></td>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id='+JSON.parse(item).dispatch1_ID+' onclick="get_ID(this.id)"disabled>結案</button>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_1" id='+JSON.parse(item).area_ID+' onclick="get_area_ID(this.id)">發送</button>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-success" value="'+JSON.parse(item).dispatch1_ID+'"" onclick="send_message(this.value)"disabled>派修</button>';
+                                                    }
+                                                    else if(JSON.parse(item).current_state == '2'){
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" style="background-color:purple">保全已到達</button></td>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id='+JSON.parse(item).dispatch1_ID+' onclick="get_ID(this.id)">結案</button>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_1" id='+JSON.parse(item).area_ID+' onclick="get_area_ID(this.id)">發送</button>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-success" value="'+JSON.parse(item).dispatch1_ID+'"" onclick="send_message(this.value)"disabled>派修</button>';
+                                                    }
+                                                    else if(JSON.parse(item).current_state == '3'){
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" style="background-color:red">保全已回報</button></td>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id='+JSON.parse(item).dispatch1_ID+' onclick="get_ID(this.id)">結案</button>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_1" id='+JSON.parse(item).area_ID+' onclick="get_area_ID(this.id)">發送</button>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-success" value="'+JSON.parse(item).dispatch1_ID+'"" onclick="send_message(this.value)"disabled>派修</button>';
+                                                    }
+                                                    else if(JSON.parse(item).current_state == '4'){
+                                                        trStr += '<td class="text-center">已結案</td>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id='+JSON.parse(item).dispatch1_ID+' onclick="get_ID(this.id)"disabled>結案</button>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_1" id='+JSON.parse(item).area_ID+' onclick="get_area_ID(this.id)"disabled>發送</button>';
+                                                        trStr += '<td class="text-center"><button type="button" class="btn btn-success" value="'+JSON.parse(item).dispatch1_ID+'"" onclick="send_message(this.value)"disabled>派修</button>';
+                                                    }
+                                                    
+                                                    trStr += '</tr>';  
+                                                });
+                                                $("#tbody").html(trStr);
+                                            },
+                                            error: function(){
+                                                //alert("error")
+                                            }
+                                        })
+
+                                    }
+                                    //alert('refresh');
+                                    $('#datatable').bootstrapTable('refresh');
+                                }
+                                function get_area_ID(id){                              //內勤傳訊
+                                    //alert(id);
+                                    document.getElementById("area_ID_1").value = id;
+                                }
+                                function post_message(){                                    //內勤傳訊
+                                    id = document.getElementById("area_ID_1").value
+                                    message = document.getElementById("message1").value;
+                                    var a ='dispatch_push '+id+' '+message;
+                                    //var mySocket = new WebSocket("ws://127.0.0.1:8888/");
+                                    //alert(a);
+                                    mySocket.send(a);
+                                }  
+                                function check_customer(id){                                //客戶資料
+                                    window.open('../customer/edit_customer.html?id='+id);
+                                }
+                                function get_ID(id){                                        //結案
+                                    //alert(id);
+                                    document.getElementById("dispatch1_ID_2").value = id;
+                                }
+                                function send_message(id){                                  //派修
+                                    var yes = confirm('是否派修?')
+                                    if(yes){
+                                        var a = 'manual ';
+                                        a = a + id;
+                                        //alert(a);
+                                        //var mySocket = new WebSocket("ws://127.0.0.1:8888/");
+                            
+                                        mySocket.send(a);
+                                    
+                                    }
+                                }
+                                function FormSubmit(){
+                                    return confirm('確定刪除?');
+                                }
+                                $(function () {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'dispatch1_report1.php',
+                                        data: {
+                                            "current_state": 2
+                                        },
+                                        async: false,
+                                        success: function(data) {
+                                            //alert(data)
+                                            var a = data.split('&');
+                                            a.splice(a.length-1, a.length);
+                                            var trStr = '';
+                                            
+                                            $.each(a, function (index, item) {
+                                                trStr += '<tr>';
+                                                trStr += '<td class="text-center">' + JSON.parse(item).time + '</td>';
+                                                trStr += '<td class="text-center">' + JSON.parse(item).security_receive_time + '</td>';
+                                                trStr += '<td class="text-center">' + JSON.parse(item).security_arrive_time + '</td>';
+                                                trStr += '<td class="text-center">' + JSON.parse(item).caseclose_time + '</td>';
+                                                trStr += '<td class="text-center"><button type="button" class="btn btn-success mx-auto" value='+JSON.parse(item).customer_ID+' onclick="check_customer(this.value)"> '+ JSON.parse(item).customer_abbreviation +'</button>';
+                                                trStr += '<td class="text-center">' + JSON.parse(item).patrol_area + '</td>';
+                                                trStr += '<td class="text-center">' + JSON.parse(item).description + '</td>';
+                                                trStr += '<td class="text-center">' + JSON.parse(item).dispatcher_report + '</td>';
+
+                                                if(JSON.parse(item).current_state == '0'){
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" style="background-color:blue">已收到警報</button></td>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id='+JSON.parse(item).dispatch1_ID+' onclick="get_ID(this.id)"disabled>結案</button>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_1" id='+JSON.parse(item).area_ID+' onclick="get_area_ID(this.id)">發送</button>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-success" value="'+JSON.parse(item).dispatch1_ID+'"" onclick="send_message(this.value)">派修</button>';
+                                                }
+                                                else if(JSON.parse(item).current_state == '1'){
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" style="background-color:green">保全已收到</button></td>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id='+JSON.parse(item).dispatch1_ID+' onclick="get_ID(this.id)"disabled>結案</button>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_1" id='+JSON.parse(item).area_ID+' onclick="get_area_ID(this.id)">發送</button>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-success" value="'+JSON.parse(item).dispatch1_ID+'"" onclick="send_message(this.value)"disabled>派修</button>';
+                                                }
+                                                else if(JSON.parse(item).current_state == '2'){
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" style="background-color:purple">保全已到達</button></td>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id='+JSON.parse(item).dispatch1_ID+' onclick="get_ID(this.id)">結案</button>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_1" id='+JSON.parse(item).area_ID+' onclick="get_area_ID(this.id)">發送</button>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-success" value="'+JSON.parse(item).dispatch1_ID+'"" onclick="send_message(this.value)"disabled>派修</button>';
+                                                }
+                                                else if(JSON.parse(item).current_state == '3'){
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" style="background-color:red">保全已回報</button></td>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id='+JSON.parse(item).dispatch1_ID+' onclick="get_ID(this.id)">結案</button>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_1" id='+JSON.parse(item).area_ID+' onclick="get_area_ID(this.id)">發送</button>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-success" value="'+JSON.parse(item).dispatch1_ID+'"" onclick="send_message(this.value)"disabled>派修</button>';
+                                                }
+                                                else if(JSON.parse(item).current_state == '4'){
+                                                    trStr += '<td class="text-center">已結案</td>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id='+JSON.parse(item).dispatch1_ID+' onclick="get_ID(this.id)"disabled>結案</button>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_1" id='+JSON.parse(item).area_ID+' onclick="get_area_ID(this.id)"disabled>發送</button>';
+                                                    trStr += '<td class="text-center"><button type="button" class="btn btn-success" value="'+JSON.parse(item).dispatch1_ID+'"" onclick="send_message(this.value)"disabled>派修</button>';
+                                                }
+                                                
+                                                trStr += '</tr>';  
+                                            });
+                                            $("#tbody").html(trStr);
+                                        },
+                                        error: function(){
+                                            //alert("error")
+                                        }
+                                    })
+                                    
+                                    $(document).ready(function () {
+                                        $('#datatable').DataTable({
+                                            scrollY: '500px',
+                                            scrollCollapse: true,
+                                            paging: false,
+                                            fixedHeader: true,
+                                            "bInfo" : false      
+                                        });
+                                        
+                                    });
+                                });
+                           
+                                </script>
+                            </table>
+                        </div>
+                        
+
+                      
+                    <!--</div>-->
+                    
+
+
+                </div>
+
+            </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    </script>
+</body>
+
+
+
+</html>

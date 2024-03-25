@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script type="text/javascript" src="http://code.changer.hk/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <title>匯入資料</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="kv" ">
+        <nav class=" navbar navbar-expand-lg navbar-dark bg-dark ">
+            <div class=" container-fluid">
+        <a class="navbar-brand">派勤系統</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="../account/account.html">帳號管理</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        客戶管理
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../customer/customer.html">客戶資料</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../customer/import_data.html">匯入資料</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        派勤
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../dispatch2/dispatch2.html">派勤回報</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/dispatch2_case_search.html">派勤資料查詢</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/switch_control.html">地區控制開關</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/switch_signal.html">訊號控制開關</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        派修
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1_report1.html">派修回報</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1_case_search.html">派修資料查詢</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1.html">派修單</a></li>
+
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        值勤
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../duty/duty.html">值勤表</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../duty/check_subscribe.html">追蹤區域</a></li>
+                    </ul>
+                    
+                </li>
+
+            </ul>
+            <label id="login_name"></label>
+                <script>
+                    document.write("@");
+                </script>
+            <form method="POST" action="../logout.php";>
+                <script>
+
+                    function FormSubmit(){
+                        return confirm('確定登出?');
+                    }
+                </script>
+                <button type="submit" class="btn btn-light" id="submit" name="submit" onclick="return FormSubmit()">登出</button>
+            </form>
+        </div>
+    </div>
+    </nav>
+
+    <div class="container">
+        <div class="row mt-5" >
+          <figure class="text-center">
+            <blockquote class="blockquote">
+                <h2>匯入資料</h2>
+            </blockquote>
+        </figure>
+          <div class="row" >
+            <script>
+                $.ajax({
+                    type: 'POST',
+                    url: '../get_login_name.php',
+                    data: {
+                        
+                    },
+                    success: function(data) {
+                        const a = data.split(/[{":}@]/);
+                        const b = a[5];
+                        var trStr = '';
+                        trStr += "<div style='color:white'>"+'歡迎登入，'+b+"</div>";
+                        $("#login_name").html(trStr);
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '../check_session.php',
+                    data: {
+                        
+                    },
+                    success: function(data) {
+                        if(data != 4){
+                            alert('請重新登入');
+                            window.location.href=('../login.html');
+                        }
+                    }
+                });
+            </script>
+            <form method="post" enctype="multipart/form-data" action="import_data.php">
+                <input type="file" name="my_file">
+                <input type="submit" value="Upload">
+            </form>
+
+        </div>
+    </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

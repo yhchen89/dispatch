@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script type="text/javascript" src="http://code.changer.hk/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <title>刪除客戶</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="kv">
+        <nav class=" navbar navbar-expand-lg navbar-dark bg-dark ">
+            <div class=" container-fluid">
+        <a class="navbar-brand">派勤系統</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="../account/account.html">帳號管理</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        客戶管理
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../customer/customer.html">客戶資料</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../customer/import_data.html">匯入資料</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        派勤
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../dispatch2/dispatch2.html">派勤回報</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/dispatch2_case_search.html">派勤資料查詢</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/switch_control.html">地區控制開關</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/switch_signal.html">訊號控制開關</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        派修
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1_report1.html">派修回報</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1_case_search.html">派修資料查詢</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1.html">派修單</a></li>
+
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        值勤
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../duty/duty.html">值勤表</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../duty/check_subscribe.html">追蹤區域</a></li>
+                    </ul>
+                    
+                </li>
+
+            </ul>
+            <label id="login_name"></label>
+                <script>
+                    document.write("@");
+                </script>
+            <form method="POST" action="../logout.php";>
+                <script>
+                    function FormSubmit(){
+                        return confirm('確定登出?');
+                    }
+                </script>
+                <button type="submit" class="btn btn-light" id="submit" name="submit" onclick="return FormSubmit()">登出</button>
+            </form>
+        </div>
+    </div>
+    </nav>
+
+    <div class="container-fluid  ">
+        <div class="row">
+
+            <div class="col">
+                <div class="col-5">
+
+                    <form name="form" action="edit_customer.html">
+                        <div class="row mt-4">
+                            <div class="col-2"><h4>客戶ID</h4></div>
+                            <div class="col"><input type="text" class="form-control" name="id" id="id" value="" required></div>
+                            <div class="col"><button type="submit" class="btn btn-primary">搜尋</button></div>
+                        </div>
+                        
+                    </form>
+                </div>
+        
+                <!-- 文字 -->
+                <figure class="text-center">
+                    <blockquote class="blockquote">
+                        <h2>刪除客戶</h2>
+                    </blockquote>
+                </figure>
+                <!--  -->
+                <div class="container-fluid">
+                    <script type="text/javascript">
+                        $.ajax({
+                            type: 'POST',
+                            url: '../get_login_name.php',
+                            data: {
+                                
+                            },
+                            success: function(data) {
+                                const a = data.split(/[{":}@]/);
+                                const b = a[5];
+                                var trStr = '';
+                                trStr += "<div style='color:white'>"+'歡迎登入，'+b+"</div>";
+                                $("#login_name").html(trStr);
+                            }
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            url: '../check_session.php',
+                            data: {
+                                
+                            },
+                            success: function(data) {
+                                if(data != 4){
+                                    alert('請重新登入');
+                                    window.location.href=('../login.html');
+                                }
+                            }
+                        });
+
+                        var id = window.location.href.split('id=')[1];
+                        $.ajax({
+                            type: 'POST',
+                            url: 'find_customer_bycustomer_ID.php',
+                            data: {
+                                "customer_ID": id
+                            },
+                            
+                            success: function(data) {    
+                                var a = data.split('@@@');
+                                for (var i = 0; i < a.length-1; i++){
+                                    
+                                    document.getElementById("customer_ID").value = JSON.parse(a[i]).customer_ID;
+                                    document.getElementById("customer_name").value = JSON.parse(a[i]).customer_name;
+                                    document.getElementById("customer_abbreviation").value = JSON.parse(a[i]).customer_abbreviation;
+                                    document.getElementById("open_date").value = JSON.parse(a[i]).open_date;
+                                    document.getElementById("close_date").value = JSON.parse(a[i]).close_date;
+                                    document.getElementById("phone").value = JSON.parse(a[i]).phone;
+                                    document.getElementById("principal").value = JSON.parse(a[i]).principal;
+                                    document.getElementById("cellphone").value = JSON.parse(a[i]).cellphone;
+                                    document.getElementById("card_number").value = JSON.parse(a[i]).card_number;
+                                    document.getElementById("address").value = JSON.parse(a[i]).address;
+                                    document.getElementById("service_area").value = JSON.parse(a[i]).service_area;
+                                    document.getElementById("patrol_area").value = JSON.parse(a[i]).patrol_area;
+                                    document.getElementById("edit_num").value = JSON.parse(a[i]).edit_num;
+                                    document.getElementById("test_time").value = JSON.parse(a[i]).test_time;
+                                    document.getElementById("transmit_method").value = JSON.parse(a[i]).transmit_method;
+                                    document.getElementById("note").value = JSON.parse(a[i]).note;
+                                    document.getElementById("priority").value = JSON.parse(a[i]).priority;
+                                    document.getElementById("setting_weekdays").value = JSON.parse(a[i]).setting_weekdays;
+                                    document.getElementById("remove_weekdays").value = JSON.parse(a[i]).remove_weekdays;
+                                    document.getElementById("setting_Sat").value = JSON.parse(a[i]).setting_Sat;
+                                    document.getElementById("remove_Sat").value = JSON.parse(a[i]).remove_Sat;
+                                    document.getElementById("setting_Sun").value = JSON.parse(a[i]).setting_Sun;
+                                    document.getElementById("remove_Sun").value = JSON.parse(a[i]).remove_Sun;
+                                    
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'find_contact_bycustomer_ID.php',
+                                        data: {
+                                            "customer_ID": id
+                                        },
+                                        async: false,
+                                        success: function(data) {  
+                                            
+                                            var a = data.split('@@@');
+                                            document.getElementById("contact_amount").value = a.length-1;
+                                            var trStr ='';
+                                            for (var i = 0; i < a.length-1; i++){
+                                                trStr += '<div class="row mb-3"><div class="col-4"><label for="card_number" class="form-label">持卡代號</label><input type="text" class="form-control" name="contact_ID[]" id="contact_ID'+i+'" value="'+JSON.parse(a[i]).contact_ID+'" readonly></div>';
+                                                trStr += '<div class="col-4"><label for="card_number" class="form-label">持卡卡號</label><input type="text" class="form-control" name="card_No[]" id="card_No'+i+'" value="'+JSON.parse(a[i]).card_number+'" readonly></div>';
+                                                trStr += '<div class="col-4"><label for="card_name" class="form-label">持卡名稱</label><input type="text" class="form-control" name="card_name[]" id="card_name'+i+'" value="'+JSON.parse(a[i]).card_name+'" readonly></div></div>';
+                                                trStr += '<div class="row mb-3"><div class="col-6"><label for="phone1" class="form-label">電話1</label><input type="text" class="form-control" name="phone1[]" id="phone1'+i+'" value="'+JSON.parse(a[i]).phone1+'" readonly></div>';
+                                                trStr += '<div class="col-6"><label for="phone2" class="form-label">電話2</label><input type="text" class="form-control" name="phone2[]" id="phone2'+i+'" value="'+JSON.parse(a[i]).phone2+'" readonly></div></div>';
+                                                trStr += '<div class="row mb-3"><div class="col-12"><label for="card_description" class="form-label">持卡說明</label><input type="text" class="form-control" name="card_description[]" id="card_description'+i+'" value="'+JSON.parse(a[i]).card_description+'" readonly></div></div>';    
+                                            }
+                                            $("#contact").html(trStr);        
+                                        }
+                                    });
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'find_zone_definition_bycustomer_ID.php',
+                                        data: {
+                                            "customer_ID": id
+                                        },
+                                        async: false,
+                                        success: function(data) {    
+                                            var a = data.split('@@@');
+                                            document.getElementById("zone_amount").value = a.length-1;
+                                            var trStr ='';
+                                            for (var i = 0; i < a.length-1; i++){
+                                                trStr += '<div class="row">';
+                                                if(i==0){
+                                                    trStr += '<div class="col-3"><label for="zone_No" class="form-label">迴路編號</label><input type="text" class="form-control" name="zone_No[]" id="zone_No'+i+'" value="'+JSON.parse(a[i]).zone_No+'" readonly></div>';
+                                                    trStr += '<div class="col-6"><label for="zone_definition" class="form-label">迴路定義</label><input type="text" class="form-control" name="zone_definition[]" id="zone_definition'+i+'" value="'+JSON.parse(a[i]).zone_definition+'" readonly></div>';
+                                                    
+                                                }
+                                                else{
+                                                    trStr += '<div class="col-3"><label for="zone_No" class="form-label"></label><input type="text" class="form-control" name="zone_No[]" id="zone_No'+i+'" value="'+JSON.parse(a[i]).zone_No+'" readonly></div>';
+                                                    trStr += '<div class="col-6"><label for="zone_definition" class="form-label"></label><input type="text" class="form-control" name="zone_definition[]" id="zone_definition'+i+'" value="'+JSON.parse(a[i]).zone_definition+'" readonly></div>';       
+                                                
+                                                }
+                                                trStr += '</div>';
+                                            }
+                                            $("#zone_definition").html(trStr);        
+                                        }
+                                    });
+                                    
+                                }             
+                            }
+                        });
+
+                    </script>
+
+                    <form name="form1" method="POST" action="delete_customer.php">
+                        <div class="row mb-3">
+                            <div class="col-1">
+                                <label for="customer_ID" class="form-label">客戶ID</label>
+                                <input type="text" class="form-control" name="customer_ID" id="customer_ID" readonly>
+                            </div>
+                            <div class="col-2">
+                                <label for="customer_name" class="form-label">客戶名稱</label>
+                                <input type="text" class="form-control" name="customer_name" id="customer_name" readonly>
+                            </div>
+                            <div class="col-2">
+                                <label for="customer_abbreviation" class="form-label">客戶簡稱</label>
+                                <input type="text" class="form-control" name="customer_abbreviation" id="customer_abbreviation" readonly>
+                            </div>
+                            <div class="col-2">
+                                <label for="phone" class="form-label">傳訊電話</label>
+                                <input type="text" class="form-control" name="phone" id="phone" readonly>
+                            </div>
+                            <div class="col-2">
+                                <label for="cellphone" class="form-label">電話</label>
+                                <input type="text" class="form-control" name="cellphone" id="cellphone" readonly>
+                            </div>
+                            <div class="col-2">
+                                <label for="principal" class="form-label">負責人</label>
+                                <input type="text" class="form-control" name="principal" id="principal" readonly>
+                            </div>
+                            <div class="col-1">
+                                <label for="card_number" class="form-label">密碼</label>
+                                <input type="text" class="form-control" name="card_number" id="card_number" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <label for="open_date" class="form-label">開通日期</label>
+                                <input type="datetime-local" class="form-control" name="open_date" id="open_date" readonly>
+                            </div>
+                            <div class="col-3">
+                                <label for="close_date" class="form-label">關閉日期</label>
+                                <input type="datetime-local" class="form-control" name="close_date" id="close_date" readonly>
+                            </div>
+                            <div class="col-5">
+                                <label for="address" class="form-label">地址</label>
+                                <input type="text" class="form-control" name="address" id="address" readonly>
+                            </div>
+                            <div class="col-1">
+                                <label for="edit_num" class="form-label">編修號碼</label>
+                                <input type="text" class="form-control" name="edit_num" id="edit_num" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-1">
+                                <label for="service_area" class="form-label">營業處</label>
+                                <input type="text" class="form-control" name="service_area" id="service_area" readonly>
+                            </div>
+                            <div class="col-2">
+                                <label for="patrol_area" class="form-label">巡邏處</label>
+                                <input type="text" class="form-control" name="patrol_area" id="patrol_area" readonly>
+                            </div>
+                            
+                            <div class="col-1">
+                                <label for="test_time" class="form-label">回測時間</label>
+                                <input type="text" class="form-control" name="test_time" id="test_time" readonly>
+                            </div>
+                            <div class="col-1">
+                                <label for="transmit_method" class="form-label">傳訊方式</label>
+                                <input type="text" class="form-control" name="transmit_method" id="transmit_method" readonly>
+                            </div>
+                            
+                            <div class="col-1">
+                                <label for="priority" class="form-label">優先度</label>
+                                <input type="text" class="form-control" name="priority" id="priority" readonly>
+                            </div>
+                            
+                            <div class="col-1">
+                                <label for="setting_weekdays" class="form-label">平日設定</label>
+                                <input type="text" class="form-control" name="setting_weekdays" id="setting_weekdays" readonly>
+                            </div>
+                            <div class="col-1">
+                                <label for="setting_Sat" class="form-label">週六設定</label>
+                                <input type="text" class="form-control" name="setting_Sat" id="setting_Sat" readonly>
+                            </div>
+                            <div class="col-1">
+                                <label for="setting_Sun" class="form-label">週日設定</label>
+                                <input type="text" class="form-control" name="setting_Sun" id="setting_Sun" readonly>
+                            </div>
+                            <div class="col-1">
+                                <label for="remove_weekdays" class="form-label">平日解除</label>
+                                <input type="text" class="form-control" name="remove_weekdays" id="remove_weekdays" readonly>
+                            </div>
+                            
+                            <div class="col-1">
+                                <label for="remove_Sat" class="form-label">週六解除</label>
+                                <input type="text" class="form-control" name="remove_Sat" id="remove_Sat" readonly>
+                            </div>
+                            
+                            <div class="col-1">
+                                <label for="remove_Sun" class="form-label">週日解除</label>
+                                <input type="text" class="form-control" name="remove_Sun" id="remove_Sun" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label for="note" class="form-label">備註</label>
+                                <textarea class="form-control" name="note" id="note" rows="5" readonly></textarea>
+                            </div>
+                           
+                            <div class="col-3">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseZone" aria-expanded="false" aria-controls="collapseZone">迴路定義</button>                         
+                                <!--label for="zone_definition" class="form-label">迴路定義</label-->
+                                <input type="number" name="zone_amount" id="zone_amount" hidden>
+                                
+                                <div class="collapse" id="collapseZone">
+                                    <div class="card card-body">
+                                        <label name="zone_definition" id="zone_definition"></label>
+                                    </div>
+                                </div>
+                            </div> 
+                            
+                            <div class="col-3">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContact" aria-expanded="false" aria-controls="collapseContact">聯絡人</button>
+                                <!--label for="contact" class="form-label">聯絡人</label-->
+                                <input type="number" name="contact_amount" id="contact_amount" hidden>
+                                
+                                <div class="collapse" id="collapseContact">
+                                    <div class="card card-body">
+                                        <label id="contact" name="contact"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <script>
+                            function FormSubmit(){
+                                return confirm('確定刪除?');
+                            }
+                            
+                        </script>
+
+                        <button type="submit" class="btn btn-danger" id="save" name="save" onclick="return FormSubmit()">刪除</button>
+ 
+                    </form>
+                    
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

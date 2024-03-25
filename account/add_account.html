@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script type="text/javascript" src="http://code.changer.hk/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <title>新增帳號</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="kv" ">
+        <nav class=" navbar navbar-expand-lg navbar-dark bg-dark ">
+            <div class=" container-fluid">
+        <a class="navbar-brand">派勤系統</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../account/account.html">帳號管理</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        客戶管理
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../customer/customer.html">客戶資料</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../customer/import_data.html">匯入資料</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        派勤
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../dispatch2/dispatch2.html">派勤回報</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/dispatch2_case_search.html">派勤資料查詢</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/switch_control.html">地區控制開關</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/switch_signal.html">訊號控制開關</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        派修
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1_report1.html">派修回報</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1_case_search.html">派修資料查詢</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1.html">派修單</a></li>
+
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        值勤
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../duty/duty.html">值勤表</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../duty/check_subscribe.html">追蹤區域</a></li>
+                    </ul>
+                    
+                </li>
+
+            </ul>
+            <label id="login_name"></label>
+                <script>
+                    document.write("@");
+                </script>
+            <form method="POST" action="../logout.php";>
+                <script>
+                    function FormSubmit(){
+                        return confirm('確定登出?');
+                    }
+                </script>
+                <button type="submit" class="btn btn-light" id="submit" name="submit" onclick="return FormSubmit()">登出</button>
+            </form>
+        </div>
+    </div>
+    </nav>
+
+    <div class="container-fluid  ">
+        <div class="row " >
+
+            <div class="col-2 border-end px-4">
+                <div class="row  mx-3 mt-3 mb-3 bor" id="new_account">
+                    <script>
+                        function add_account(){
+                            location.href='add_account.html';
+                        }
+                    </script>
+                    <button type="button" class="btn btn-success mx-auto" onclick="add_account()">新增帳號</button>
+                </div>
+
+                <script type="text/javascript">
+                    $.ajax({
+                        type: 'POST',
+                        url: '../get_login_name.php',
+                        data: {
+                            
+                        },
+                        success: function(data) {
+                            const a = data.split(/[{":}@]/);
+                            const b = a[5];
+                            var trStr = '';
+                            trStr += "<div style='color:white'>"+'歡迎登入，'+b+"</div>";
+                            $("#login_name").html(trStr);
+                        }
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: '../check_session.php',
+                        data: {
+                            
+                        },
+                        success: function(data) {
+                            if(data != 4){
+                                alert('請重新登入');
+                                window.location.href=('../login.html');
+                            }
+                        }
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: 'findAllArea.php',
+                        data: {
+                        },
+                        success: function(data) {    
+                            var a = data.split('@@@');
+                            var trStr = '';
+                            for (var i = 0; i < a.length-1; i++){
+                                trStr += '<input type="checkbox" name="search_area" value="'+JSON.parse(a[i]).service_area+'" id = "'+JSON.parse(a[i]).service_area+'">'+JSON.parse(a[i]).service_area+'<br>';
+                            }
+                            $("#search_area").html(trStr);
+                        }
+                    });
+                    function check_all(obj,cName){
+                        var checkboxs = document.getElementsByName(cName);
+                        for(var i=0;i<checkboxs.length;i++){checkboxs[i].checked = obj.checked;}
+                    }
+                  
+                </script>
+                <form action="account.html">
+                    <h4>身分</h4>
+                    <select class="form-select mb-3" aria-label="Default select example" name="search_type" id="search_type" required>
+                        <option selected value="">Open this select menu</option>
+                        <option value="0">系統管理員</option>
+                        <option value="1">地區管理人</option>
+                        <option value="2">保全</option>
+                        <option value="3">內勤</option>
+                    </select>
+
+                    <h4>區域</h4>
+                    <label id="search_area"></label>
+                    <input type="checkbox" name="" value="" id="" onclick="check_all(this, 'search_area')">全選<br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+            <div class="col-10 ">
+                <!-- 文字 -->
+                <figure class="text-center mt-5">
+                    <blockquote class="blockquote">
+                        <h2>帳號資料</h2>
+                    </blockquote>
+                </figure>
+                <!--  -->
+                <div class="container w-50">
+                    <form name="form1" method="POST" action="add_account.php">
+                        <div class="row mb-3">
+                                <label for="account" class="form-label">帳號</label>
+                                <input type="text" class="form-control" name="account" id="account" placeholder="account" oninput="value=this.value.replace(/[^\w_]/g,'');"required>
+                        </div>
+                        <div class="row mb-3">
+                                <label for="password" class="form-label">密碼</label>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="password" oninput="value=this.value.replace(/[^\w_]/g,'');">
+                        </div>
+                        <div class="row mb-3">
+                                <label for="name" class="form-label">名字</label>
+                                <input type="text" class="form-control" name="name" id="name" placeholder="name" required>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="name" class="form-label">電話</label>
+                            <input type="text" class="form-control" name="phone" id="phone" placeholder="phone" oninput="value=this.value.replace(/\D/g,'')">
+                        </div>
+              
+                        <script type="text/javascript">
+                            function chk(input){
+                                for(var i=0;i<document.form1.employee_area.length;i++)
+                                {
+                                document.form1.employee_area[i].checked = false;
+                                }
+                                
+                                input.checked = true;
+                                return true;
+                            }
+                            $.ajax({
+                                type: 'POST',
+                                url: 'findAllArea.php',
+                                data: {
+                                },
+                                success: function(data) {    
+                                    var a = data.split('@@@');
+                                    var trStr = '';
+                                    for (var i = 0; i < a.length-1; i++){
+                                        trStr += '<input type="checkbox" name="employee_area" value="'+JSON.parse(a[i]).service_area+'" id = "'+JSON.parse(a[i]).service_area+'" onclick="return chk(this);">'+JSON.parse(a[i]).service_area;
+                                    }
+                                    $("#employee_area").html(trStr);
+                                }
+                            });
+
+                        </script>
+                        <div class="row mb-3">
+                            <label for="type" class="form-label">負責區域</label>
+                            <label id="employee_area"></label>
+                        </div>
+                        <div class="row mb-5">
+                            <label for="type" class="form-label">身分</label>
+                            <select class="form-select" aria-label="Default select example" name="employee_type" id="employee_type" required>
+                                <option selected value="">Open this select menu</option>
+                                <option value="0">系統管理員</option>
+                                <option value="1">地區管理人</option>
+                                <option value="2">保全</option>
+                                <option value="3">內勤</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" name="submit">儲存</button>
+                        <button type="reset" class="btn btn-secondary" >重設</button>
+ 
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

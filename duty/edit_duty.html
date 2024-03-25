@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script type="text/javascript" src="http://code.changer.hk/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <title>編輯值勤表</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="kv">
+        <nav class=" navbar navbar-expand-lg navbar-dark bg-dark ">
+            <div class=" container-fluid">
+        <a class="navbar-brand">派勤系統</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="../account/account.html">帳號管理</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        客戶管理
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../customer/customer.html">客戶資料</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../customer/import_data.html">匯入資料</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        派勤
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../dispatch2/dispatch2.html">派勤回報</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/dispatch2_case_search.html">派勤資料查詢</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/switch_control.html">地區控制開關</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch2/switch_signal.html">訊號控制開關</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        派修
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1_report1.html">派修回報</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1_case_search.html">派修資料查詢</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../dispatch1/dispatch1.html">派修單</a></li>
+
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        值勤
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../duty/duty.html">值勤表</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="../duty/check_subscribe.html">追蹤區域</a></li>
+                    </ul>
+                    
+                </li>
+
+            </ul>
+            <label id="login_name"></label>
+                <script>
+                    document.write("@");
+                </script>
+            <form method="POST" action="../logout.php";>
+                <script>
+                    function FormSubmit(){
+                        return confirm('確定登出?');
+                    }
+                </script>
+                <button type="submit" class="btn btn-primary" id="submit" name="submit" onclick="return FormSubmit()">登出</button>
+            </form>
+        </div>
+    </div>
+    </nav>
+
+    <div class="container-fluid  ">
+        <div class="row " >
+
+            <div class="col-2 border-end px-4">
+                <!--div class="row  mx-3 mt-3 mb-3 bor" id="new_account">
+                    <script>
+                        function add_duty(){
+                            location.href='add_duty.html';
+                        }
+                    </script>
+                    <button type="button" class="btn btn-success mx-auto" onclick="add_duty()">新增值勤表</button>
+                </div-->
+                <div class="mt-3">
+                    <form action="edit_duty.html">
+                        <h4>日期</h4>
+                        <input type="date" name="date" id="search_date" required>
+                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                    </form>
+                </div>
+                
+            </div>
+
+            <div class="col-10 ">
+                <!-- 文字 -->
+                <figure class="text-center mt-5">
+                    <blockquote class="blockquote">
+                        <h2>編輯值勤表</h2>
+                    </blockquote>
+                </figure>
+                <!--  -->
+                <div class="container w-100">
+                    <script type="text/javascript">
+                        $.ajax({
+                            type: 'POST',
+                            url: '../get_login_name.php',
+                            data: {
+                                
+                            },
+                            success: function(data) {
+                                const a = data.split(/[{":}@]/);
+                                const b = a[5];
+                                var trStr = '';
+                                trStr += "<div style='color:white'>"+'歡迎登入，'+b+"</div>";
+                                $("#login_name").html(trStr);
+                            }
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            url: '../check_session.php',
+                            data: {
+                                
+                            },
+                            success: function(data) {
+                                if(data != 4){
+                                    alert('請重新登入');
+                                    window.location.href=('../login.html');
+                                }
+                            }
+                        });
+                        var date = window.location.href.split('date=')[1];
+                        var sa=[];
+                        $(function(){
+                            $.ajax({
+                                type: 'POST',
+                                url: 'find_duty_bydate.php',
+                                data: {
+                                    "date": date
+                                },
+                                async: false,
+                                success: function(data) {  
+                                    var a = data.split('@@@');
+                                    var trStr ='';
+                                    document.getElementById('date').value = date;
+                                    document.getElementById('amount').value = a.length-1;
+                                    //alert(a.length-1);
+                                    var test="";
+                                    var rs=[];
+                                    var count=1;
+                                    for (var i = 0; i < a.length-1; i++){
+                                        if(JSON.parse(a[i]).service_area==test){
+                                            count = count + 1;
+                                            
+                                        }
+                                        else{
+                                            rs.push(count);
+                                            count=1;
+                                            test = JSON.parse(a[i]).service_area;
+                                        }   
+                                    }
+                                    rs.push(count);
+                                    test="";
+                                    var rs_index = 1;
+                                    
+                                    for (var i = 0; i < a.length-1; i++){
+                                        
+                                        /*trStr += '<tr>';
+                                        trStr += '<th scope="row">' + '<input type="text" class="form-control" name="service_area'+i+'" id="service_area'+i+'" value="'+JSON.parse(a[i]).service_area +'" readonly>' + '</th>';
+                                        trStr += '<td>' + '<input type="text" class="form-control" name="patrol_area'+i+'" id="patrol_area'+i+'" value="'+JSON.parse(a[i]).patrol_area +'" readonly>' + '</td>';
+                                        trStr += '<td>' + '<input type="text" class="form-control" name="day_employee_ID1'+i+'" id="day_employee_ID1'+i+'" list="day_employee_ID1_1'+i+'" value="'+JSON.parse(a[i]).day_employee_ID1 +'" readonly><datalist name="day_employee_ID1_1'+i+'" id="day_employee_ID1_1'+i+'"></datalist>' + '</td>';
+                                        trStr += '<td>' + '<input type="text" class="form-control" name="day_employee_ID2'+i+'" id="day_employee_ID2'+i+'" list="day_employee_ID2_1'+i+'" value="'+JSON.parse(a[i]).day_employee_ID2 +'" readonly><datalist name="day_employee_ID2_1'+i+'" id="day_employee_ID2_1'+i+'"></datalist>' + '</td>';
+                                        trStr += '<td>' + '<input type="text" class="form-control" name="day_car_number'+i+'" id="day_car_number'+i+'" value="'+JSON.parse(a[i]).day_car_No +'" readonly>' + '</td>';
+                                        trStr += '<td>' + '<input type="text" class="form-control" name="night_employee_ID1'+i+'" id="night_employee_ID1'+i+'" list="night_employee_ID1_1'+i+'" value="'+JSON.parse(a[i]).night_employee_ID1 +'" readonly><datalist name="night_employee_ID1_1'+i+'" id="night_employee_ID1_1'+i+'"></datalist>' + '</td>';
+                                        trStr += '<td>' + '<input type="text" class="form-control" name="night_employee_ID2'+i+'" id="night_employee_ID2'+i+'" list="night_employee_ID2_1'+i+'" value="'+JSON.parse(a[i]).night_employee_ID2 +'" readonly><datalist name="night_employee_ID2_1'+i+'" id="night_employee_ID2_1'+i+'"></datalist>' + '</td>';
+                                        trStr += '<td>' + '<input type="text" class="form-control" name="night_car_number'+i+'" id="night_car_number'+i+'" value="'+JSON.parse(a[i]).night_car_No +'" readonly>' + '</td>';
+                                        trStr += '</tr>';*/  
+                                        if(JSON.parse(a[i]).service_area==test){
+                                            trStr += '<tr>';
+                                            //trStr += '<input type="text" class="form-control" name="service_area'+i+'" id="service_area'+i+'" value="'+JSON.parse(a[i]).service_area +'"> hidden';
+                                            // trStr += '<td>' + '<input type="text" class="form-control" name="service_area'+i+'" id="service_area'+i+'" value="'+JSON.parse(a[i]).service_area +'">' + '<td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="patrol_area'+i+'" id="patrol_area'+i+'" value="'+JSON.parse(a[i]).patrol_area +'" readonly>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="show_day_employee_ID1'+i+'" id="show_day_employee_ID1'+i+'" readonly>' + '<input type="text" class="form-control" name="day_employee_ID1'+i+'" id="day_employee_ID1'+i+'" list="day_employee_ID1_1'+i+'" value="'+JSON.parse(a[i]).day_employee_ID1 +'" hidden readonly><datalist name="day_employee_ID1_1'+i+'" id="day_employee_ID1_1'+i+'"></datalist>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="show_day_employee_ID2'+i+'" id="show_day_employee_ID2'+i+'" readonly>' + '<input type="text" class="form-control" name="day_employee_ID2'+i+'" id="day_employee_ID2'+i+'" list="day_employee_ID2_1'+i+'" value="'+JSON.parse(a[i]).day_employee_ID2 +'" hidden readonly><datalist name="day_employee_ID2_1'+i+'" id="day_employee_ID2_1'+i+'"></datalist>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="day_car_number'+i+'" id="day_car_number'+i+'" value="'+JSON.parse(a[i]).day_car_No +'" readonly>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="show_night_employee_ID1'+i+'" id="show_night_employee_ID1'+i+'" readonly>' + '<input type="text" class="form-control" name="night_employee_ID1'+i+'" id="night_employee_ID1'+i+'" list="night_employee_ID1_1'+i+'" value="'+JSON.parse(a[i]).night_employee_ID1 +'" hidden readonly><datalist name="night_employee_ID1_1'+i+'" id="night_employee_ID1_1'+i+'"></datalist>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="show_night_employee_ID2'+i+'" id="show_night_employee_ID2'+i+'" readonly>' + '<input type="text" class="form-control" name="night_employee_ID2'+i+'" id="night_employee_ID2'+i+'" list="night_employee_ID2_1'+i+'" value="'+JSON.parse(a[i]).night_employee_ID2 +'" hidden readonly><datalist name="night_employee_ID2_1'+i+'" id="night_employee_ID2_1'+i+'"></datalist>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="night_car_number'+i+'" id="night_car_number'+i+'" value="'+JSON.parse(a[i]).night_car_No +'" readonly>' + '</td>';
+                                            trStr += '</tr>';  
+                                        }
+                                        else{
+                                            test = JSON.parse(a[i]).service_area
+                                            trStr += '<tr>';
+                                            trStr += '<th scope="row" rowspan="'+rs[rs_index]+'">' +'<input type="text" class="form-control" name="service_area'+i+'" id="service_area'+i+'" value="'+JSON.parse(a[i]).service_area +'" readonly>' + '</th>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="patrol_area'+i+'" id="patrol_area'+i+'" value="'+JSON.parse(a[i]).patrol_area +'" readonly>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="show_day_employee_ID1'+i+'" id="show_day_employee_ID1'+i+'" readonly>' + '<input type="text" class="form-control" name="day_employee_ID1'+i+'" id="day_employee_ID1'+i+'" list="day_employee_ID1_1'+i+'" value="'+JSON.parse(a[i]).day_employee_ID1 +'" hidden readonly><datalist name="day_employee_ID1_1'+i+'" id="day_employee_ID1_1'+i+'"></datalist>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="show_day_employee_ID2'+i+'" id="show_day_employee_ID2'+i+'" readonly>' + '<input type="text" class="form-control" name="day_employee_ID2'+i+'" id="day_employee_ID2'+i+'" list="day_employee_ID2_1'+i+'" value="'+JSON.parse(a[i]).day_employee_ID2 +'" hidden readonly><datalist name="day_employee_ID2_1'+i+'" id="day_employee_ID2_1'+i+'"></datalist>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="day_car_number'+i+'" id="day_car_number'+i+'" value="'+JSON.parse(a[i]).day_car_No +'" readonly>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="show_night_employee_ID1'+i+'" id="show_night_employee_ID1'+i+'" readonly>' + '<input type="text" class="form-control" name="night_employee_ID1'+i+'" id="night_employee_ID1'+i+'" list="night_employee_ID1_1'+i+'" value="'+JSON.parse(a[i]).night_employee_ID1 +'" hidden readonly><datalist name="night_employee_ID1_1'+i+'" id="night_employee_ID1_1'+i+'"></datalist>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="show_night_employee_ID2'+i+'" id="show_night_employee_ID2'+i+'" readonly>' + '<input type="text" class="form-control" name="night_employee_ID2'+i+'" id="night_employee_ID2'+i+'" list="night_employee_ID2_1'+i+'" value="'+JSON.parse(a[i]).night_employee_ID2 +'" hidden readonly><datalist name="night_employee_ID2_1'+i+'" id="night_employee_ID2_1'+i+'"></datalist>' + '</td>';
+                                            trStr += '<td>' + '<input type="text" class="form-control" name="night_car_number'+i+'" id="night_car_number'+i+'" value="'+JSON.parse(a[i]).night_car_No +'" readonly>' + '</td>';
+                                            trStr += '</tr>';  
+                                            rs_index++;
+                                            
+                                        }
+                                        //document.getElementById("show_day_employee_ID1"+i).value = find_employee_by_ID(JSON.parse(a[i]).day_employee_ID1);
+                                        sa.push(JSON.parse(a[i]).service_area);
+                                    }
+                                    $("#tbody").html(trStr);
+                                }
+                            });
+                            
+                        })
+                        $(function(){
+                            for (var i=0; i< document.getElementById('amount').value; i++){
+                                document.getElementById("show_day_employee_ID1"+i).value = find_employee_by_ID(document.getElementById("day_employee_ID1"+i).value);
+                                document.getElementById("show_day_employee_ID2"+i).value = find_employee_by_ID(document.getElementById("day_employee_ID2"+i).value);
+                                document.getElementById("show_night_employee_ID1"+i).value = find_employee_by_ID(document.getElementById("night_employee_ID1"+i).value);
+                                document.getElementById("show_night_employee_ID2"+i).value = find_employee_by_ID(document.getElementById("night_employee_ID2"+i).value);
+                                //alert(find_employee_by_ID(document.getElementById("day_employee_ID1"+i).value));
+                            }
+                        })
+                        function find_employee_by_ID(employee_ID){
+                            var trStr ='';
+                            $.ajax({
+                                type: 'POST',
+                                url: 'find_employee_by_ID.php',
+                                data: {
+                                    "employee_ID":employee_ID
+                                },
+                                async: false,
+                                success: function(data) {
+                                    //alert(data)
+                                    
+                                    var a = data.split('@@@');
+                                    
+                                    trStr += (JSON.parse(a[0]).employee_ID + ' ' + JSON.parse(a[0]).employee_name);
+                         
+                                }
+                            });
+                            //alert(trStr);
+                            if(trStr=="undefined undefined")
+                                return "";
+                            return trStr;
+                        }
+
+                        function choose_employee_ID(service_area, index){
+                                $.ajax({
+                                type: 'POST',
+                                url: 'choose_employee_ID.php',
+                                data: {"service_area":service_area
+                                },
+                                success: function(data) {
+                                    //alert(data);
+                                    var a = data.split('@@@');
+                                    var trsStr ='';
+                              
+                                    for (var i = 0; i < a.length-1; i++){
+                                        trsStr += '<option value="'+JSON.parse(a[i]).employee_ID +'">';
+                                        trsStr += (JSON.parse(a[i]).employee_ID + ' ' + JSON.parse(a[i]).employee_name);
+                                        trsStr += '</option>';
+                                    }
+                                    $("#day_employee_ID1_1"+index).html(trsStr);
+                                    $("#day_employee_ID2_1"+index).html(trsStr);
+                                    $("#night_employee_ID1_1"+index).html(trsStr);
+                                    $("#night_employee_ID2_1"+index).html(trsStr);
+                                }
+                                });
+                            }
+                        
+                        function edit(){
+                            for (var i=0; i< document.getElementById('amount').value; i++){
+                                $("#show_day_employee_ID1"+i).prop('hidden', true);
+                                $("#show_day_employee_ID2"+i).prop('hidden', true);
+                                $("#show_night_employee_ID1"+i).prop('hidden', true);
+                                $("#show_night_employee_ID2"+i).prop('hidden', true);
+                                $("#day_employee_ID1"+i).prop('hidden', false);
+                                $("#day_employee_ID2"+i).prop('hidden', false);
+                                $("#night_employee_ID1"+i).prop('hidden', false);
+                                $("#night_employee_ID2"+i).prop('hidden', false);
+                                
+                                $("#day_employee_ID1"+i).prop('readonly', false);
+                                $("#day_employee_ID2"+i).prop('readonly', false);
+                                $("#day_car_number"+i).prop('readonly', false);
+                                $("#night_employee_ID1"+i).prop('readonly', false);
+                                $("#night_employee_ID2"+i).prop('readonly', false);
+                                $("#night_car_number"+i).prop('readonly', false);
+                                choose_employee_ID(sa[i], i);
+                            }
+                        }
+                        
+                    </script>
+                    <div class="row">
+                        <form name="form1" method="POST" action="edit_duty.php">
+                            <input type="number" name="amount" id="amount" hidden>
+                            <input type="date" name="date" id="date" hidden>
+                            <table class="table  table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">營業處</th>
+                                        <th scope="col">巡邏處</th>
+                                        <th scope="col">日間人員1</th>
+                                        <th scope="col">日間人員2</th>
+                                        <th scope="col">車號</th>
+                                        <th scope="col">夜間人員1</th>
+                                        <th scope="col">夜間人員2</th>
+                                        <th scope="col">車號</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                                
+                            </table>
+                            <button type="submit" class="btn btn-primary" name="save">儲存</button>
+                            <button type="button" class="btn btn-secondary" onclick="return edit();">編輯</button>
+
+                        </form>
+                        
+                    </div>
+                    
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
